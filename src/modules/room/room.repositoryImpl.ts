@@ -27,10 +27,12 @@ export class RoomRepositoryImpl implements RoomRepository {
     manager: EntityManager,
     roomId: number,
     userId: number,
+    randomString: string,
   ): Promise<void> {
     const newRoomUser = manager.getRepository(RoomUsers).create();
     newRoomUser.roomId = roomId;
     newRoomUser.userId = userId;
+    newRoomUser.code = randomString;
 
     await manager.getRepository(RoomUsers).save(newRoomUser);
     return;

@@ -10,7 +10,9 @@ export interface RoomRepository {
     manager: EntityManager,
     roomId: number,
     userId: number,
+    randomString: string,
   ): Promise<void>;
+
   // read
   findRoomByName(roomName: string): Promise<Rooms>;
   findByRoomUserByUserId(userId: number): Promise<RoomUsers>;
