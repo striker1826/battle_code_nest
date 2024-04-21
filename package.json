@@ -36,6 +36,7 @@
     "mysql2": "^3.9.6",
     "nest-winston": "^1.9.4",
     "passport": "^0.7.0",
+    "passport-github": "^1.1.0",
     "passport-kakao": "^1.0.1",
     "passport-local": "^1.0.0",
     "reflect-metadata": "^0.1.13",
