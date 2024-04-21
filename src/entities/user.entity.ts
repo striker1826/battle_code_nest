@@ -25,7 +25,11 @@ export class Users extends Date {
   @Column('bigint', { name: 'tierId', comment: '유저의 티어 아이디' })
   tierId: number;
 
-  @Column('varchar', { name: 'refreshToken', comment: '리프레시 토큰' })
+  @Column('varchar', {
+    name: 'refreshToken',
+    comment: '리프레시 토큰',
+    nullable: true,
+  })
   refreshToken: string;
 
   @ManyToOne(() => Tiers, (tiers) => tiers.Users, {

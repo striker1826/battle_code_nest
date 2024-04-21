@@ -1,7 +1,7 @@
 export class UserAndTierDto {
   userId: number;
   nickname: string;
-  // tierId: number;
+  refreshToken: string;
   Tiers: {
     tierId: number;
     tierName: string;

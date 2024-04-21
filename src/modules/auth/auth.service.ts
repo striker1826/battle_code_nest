@@ -37,6 +37,10 @@ export class AuthService {
       key: JwtEnum.REFRESH_TOKEN,
     });
 
+    if (user.refreshToken) {
+    }
+    await this.authRepository.updateRefreshToken(user.userId, refresh_token);
+
     return { access_token, refresh_token };
   }
 

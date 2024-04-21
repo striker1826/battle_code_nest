@@ -25,9 +25,24 @@ export class AuthRepositoryImpl implements AuthRepository {
       .createQueryBuilder('user')
       .where('user.nickname = :githubName', { githubName })
       .leftJoin('user.Tiers', 'tier')
-      .select(['user.userId', 'user.nickname', 'tier.tierId', 'tier.tierName'])
+      .select([
+        'user.userId',
+        'user.nickname',
+        'user.refreshToken',
+        'tier.tierId',
+        'tier.tierName',
+      ])
       .getOne();
 
     return user;
+  }
+
+  // update
+  async updateRefreshToken(
+    userId: number,
+    refreshToken: string,
+  ): Promise<void> {
+    await this.userModel.update(userId, { refreshToken });
+    return;
   }
 }
