@@ -7,6 +7,7 @@ import { Users } from 'src/entities/user.entity';
 import { AuthRepository } from './auth.repository';
 import { AuthRepositoryImpl } from './auth.repositoryImpl';
 import { JwtService } from '@nestjs/jwt';
+import { JwtStrategy } from './strategy/jwt/jwt.guard';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Users])],
@@ -15,6 +16,7 @@ import { JwtService } from '@nestjs/jwt';
     AuthService,
     { provide: AuthRepository, useClass: AuthRepositoryImpl },
     GithubOauthStrategy,
+    JwtStrategy,
     JwtService,
   ],
 })
