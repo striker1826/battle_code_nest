@@ -7,6 +7,7 @@ export interface AuthRepository {
 
   // read
   findUserByGithubName(githubName: string): Promise<UserAndTierDto>;
+  findUserByRefreshToken(refreshToken: string): Promise<UserAndTierDto>;
 
   // update
   updateRefreshToken(userId: number, refreshToken: string): Promise<void>;

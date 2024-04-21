@@ -76,4 +76,18 @@ export class AuthService {
     await this.authRepository.updateRefreshToken(userId, null);
     return;
   }
+
+  async accessTokenRefresh(refreshToken: string) {
+    const user = await this.authRepository.findUserByRefreshToken(refreshToken);
+
+    // access_token 재발급
+    const access_token = this.jwtGenerator({
+      id: user.userId,
+      nickname: user.nickname,
+      tier: user.Tiers.tierId,
+      key: JwtEnum.ACCESS_TOKEN,
+    });
+
+    return access_token;
+  }
 }

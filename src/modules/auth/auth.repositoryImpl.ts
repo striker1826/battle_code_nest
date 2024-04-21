@@ -37,6 +37,23 @@ export class AuthRepositoryImpl implements AuthRepository {
     return user;
   }
 
+  async findUserByRefreshToken(refreshToken: string): Promise<UserAndTierDto> {
+    const user = await this.userModel
+      .createQueryBuilder('user')
+      .where('user.refreshToken = :refreshToken', { refreshToken })
+      .leftJoin('user.Tiers', 'tier')
+      .select([
+        'user.userId',
+        'user.nickname',
+        'user.refreshToken',
+        'tier.tierId',
+        'tier.tierName',
+      ])
+      .getOne();
+
+    return user;
+  }
+
   // update
   async updateRefreshToken(
     userId: number,

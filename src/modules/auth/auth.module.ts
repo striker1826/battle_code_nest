@@ -7,7 +7,8 @@ import { Users } from 'src/entities/user.entity';
 import { AuthRepository } from './auth.repository';
 import { AuthRepositoryImpl } from './auth.repositoryImpl';
 import { JwtService } from '@nestjs/jwt';
-import { JwtStrategy } from './strategy/jwt/jwt.guard';
+import { JwtStrategy } from './strategy/jwt/jwt.strategy';
+import { RefreshStrategy } from './strategy/jwt/refresh.strategy';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Users])],
@@ -17,6 +18,7 @@ import { JwtStrategy } from './strategy/jwt/jwt.guard';
     { provide: AuthRepository, useClass: AuthRepositoryImpl },
     GithubOauthStrategy,
     JwtStrategy,
+    RefreshStrategy,
     JwtService,
   ],
 })
