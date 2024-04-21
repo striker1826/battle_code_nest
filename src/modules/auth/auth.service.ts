@@ -37,6 +37,10 @@ export class AuthService {
       key: JwtEnum.REFRESH_TOKEN,
     });
 
+    if (user.refreshToken) {
+    }
+    await this.authRepository.updateRefreshToken(user.userId, refresh_token);
+
     return { access_token, refresh_token };
   }
 
@@ -66,5 +70,24 @@ export class AuthService {
 
       return refresh_token;
     }
+  }
+
+  async logout(userId: number): Promise<void> {
+    await this.authRepository.updateRefreshToken(userId, null);
+    return;
+  }
+
+  async accessTokenRefresh(refreshToken: string) {
+    const user = await this.authRepository.findUserByRefreshToken(refreshToken);
+
+    // access_token 재발급
+    const access_token = this.jwtGenerator({
+      id: user.userId,
+      nickname: user.nickname,
+      tier: user.Tiers.tierId,
+      key: JwtEnum.ACCESS_TOKEN,
+    });
+
+    return access_token;
   }
 }
