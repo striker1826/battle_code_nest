@@ -13,4 +13,10 @@ export class AuthController {
     const tokens = await this.authService.githubLogin(user.username);
     return tokens;
   }
+
+  @Post('logout')
+  async logout(@User() user: any) {
+    await this.authService.logout(user.id);
+    return;
+  }
 }

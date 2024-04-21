@@ -71,4 +71,9 @@ export class AuthService {
       return refresh_token;
     }
   }
+
+  async logout(userId: number): Promise<void> {
+    await this.authRepository.updateRefreshToken(userId, null);
+    return;
+  }
 }
