@@ -15,7 +15,12 @@ export interface RoomRepository {
 
   // read
   findRoomByName(roomName: string): Promise<Rooms>;
-  findByRoomUserByUserId(userId: number): Promise<RoomUsers>;
+  findRoomUserByUserId(userId: number): Promise<RoomUsers>;
+  findRoomUser(
+    roomId: number,
+    userId: number,
+    code: string,
+  ): Promise<RoomUsers>;
 }
 
 export const RoomRepository = Symbol('RoomRepository');

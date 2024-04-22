@@ -44,8 +44,20 @@ export class RoomRepositoryImpl implements RoomRepository {
     return room;
   }
 
-  async findByRoomUserByUserId(userId: number): Promise<RoomUsers> {
+  async findRoomUserByUserId(userId: number): Promise<RoomUsers> {
     const roomUser = await this.roomUserModel.findOne({ where: { userId } });
+    return roomUser;
+  }
+
+  async findRoomUser(
+    roomId: number,
+    userId: number,
+    code: string,
+  ): Promise<RoomUsers> {
+    const roomUser = await this.roomUserModel.findOne({
+      where: { roomId, userId, code },
+    });
+
     return roomUser;
   }
 }
