@@ -24,6 +24,9 @@ export class RoomUsers extends Date {
   @Column('bigint', { name: 'userId', comment: '유저의 아이디' })
   userId: number;
 
+  @Column('varchar', { name: 'code', comment: '코드' })
+  code: string;
+
   @ManyToOne(() => Users, (users) => users.RoomUsers, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
