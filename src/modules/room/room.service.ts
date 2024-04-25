@@ -64,11 +64,11 @@ export class RoomService {
     const { id } = this.utilsService.verifyJwt(access_token);
     const roomUser = await this.roomRepository.findRoomUser(roomId, id, code);
 
-    if (roomUser) {
-      socket.join(String(roomUser.roomId));
-      return { result: true };
-    } else {
+    if (!roomUser) {
       return { result: false };
     }
+
+    socket.join(String(roomUser.roomId));
+    return { result: true };
   }
 }

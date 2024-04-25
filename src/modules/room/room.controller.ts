@@ -13,7 +13,6 @@ import { User } from 'src/common/decorators/user.decorator';
 import { SocketEvent } from 'src/enum/socketEvent.enum';
 import { CreatedRoomDto } from './dto/output/createdRoom.dto';
 import { CheckValidEnterRoom } from './dto/input/checkValidEnterRoom';
-import { UtilsService } from 'src/utils/utils.service';
 
 @Controller('room')
 export class RoomController {
