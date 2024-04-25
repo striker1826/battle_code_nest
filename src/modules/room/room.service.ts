@@ -16,6 +16,7 @@ export class RoomService {
     private readonly utilsService: UtilsService,
   ) {}
 
+  // http
   async createRoom(room: RoomDto, userId: number) {
     const { roomName } = room;
     let randomString: string;
@@ -42,7 +43,7 @@ export class RoomService {
       roomId = createdRoom.roomId;
 
       // 방에 정상적인 방법으로 입장했는지 식별하는 랜덤 코드 생성
-      const randomString = generateRandomString(8);
+      randomString = generateRandomString(8);
 
       // 방에 유저 추가
       await this.roomRepository.saveRoomUser(
@@ -56,6 +57,39 @@ export class RoomService {
     return { roomId, randomString };
   }
 
+  async enterRoom(
+    roomId: number,
+    userId: number,
+  ): Promise<{ randomString: string }> {
+    let randomString: string;
+    // 이미 방에 속해있는 유저인지 확인 --> 있으면 에러
+    const isRoomUserByUserId = await this.roomRepository.findRoomUserByUserId(
+      userId,
+    );
+
+    if (isRoomUserByUserId) {
+      throw new ForbiddenException(RoomEnum.ALREADY_BELONG_USER);
+    }
+
+    // 트랜잭션 처리
+    await this.dataSource.transaction(async (manager) => {
+      // 방에 정상적인 방법으로 입장했는지 식별하는 랜덤 코드 생성
+      randomString = generateRandomString(8);
+
+      // 방에 유저 추가
+      await this.roomRepository.saveRoomUser(
+        manager,
+        roomId,
+        userId,
+        randomString,
+      );
+    });
+
+    return { randomString };
+  }
+
+  // --------------------------------------------------------------
+  // socket
   async socketJoinRoom(
     { code, roomId, access_token }: CheckValidEnterRoom,
     socket: Socket,

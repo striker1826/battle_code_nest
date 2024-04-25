@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Param, Post, UseGuards } from '@nestjs/common';
 import {
   ConnectedSocket,
   MessageBody,
@@ -25,6 +25,16 @@ export class RoomController {
     @User() { id }: any,
   ): Promise<CreatedRoomDto> {
     const result = await this.roomService.createRoom(room, id);
+    return result;
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('enter/:roomId')
+  async enterRoom(
+    @Param('roomId') roomId: number,
+    @User() { id }: any,
+  ): Promise<{ randomString: string }> {
+    const result = await this.roomService.enterRoom(roomId, id);
     return result;
   }
 }
